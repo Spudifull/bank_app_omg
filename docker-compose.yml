@@ -1,0 +1,25 @@
+version: '3.9'
+
+services:
+    app:
+        build:
+            context: .
+            dockerfile: Dockerfile
+        ports:
+            - "8000:80"
+        environment:
+            APP_ENV: local
+            APP_KEY: base64:EF4LmTk7NQPF2ds/95dFgpv2HOysqD6hIcodHr+cbcs=
+            DB_CONNECTION: sqlite
+            CACHE_DRIVER: redis
+            SESSION_DRIVER: redis
+            QUEUE_CONNECTION: redis
+            REDIS_HOST: redis
+        volumes:
+            - ./:/var/www/html
+            - ./database:/var/www/html/database
+
+    redis:
+        image: redis:alpine
+        ports:
+            - "6379:6379"
